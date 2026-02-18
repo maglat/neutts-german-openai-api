@@ -1,6 +1,9 @@
-neutts[all]>=0.1.0
+# Core dependencies for neutts without llama/onnx extras
+neutts>=0.1.0
 fastapi[standard]
 uvicorn
 pydantic
 pydub
 numpy
+librosa>=0.10.0
+soundfile>=0.12.0

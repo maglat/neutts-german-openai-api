@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y \
     libespeak1 \
     libsndfile1 \
     ffmpeg \
+    curl \
+    cmake \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 # Set environment variables
@@ -18,7 +21,7 @@ ENV TOKENIZERS_PARALLELISM=false
 WORKDIR /app
 RUN mkdir -p /app/model_cache /app/voices
 
-# Copy requirements
+# Copy requirements first for better caching
 COPY requirements.txt .
 
 # Install Python dependencies
@@ -26,7 +29,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY *.py .
-COPY -R samples/ ./samples/
+COPY samples/ ./samples/
 
 # Expose port
 EXPOSE 8136

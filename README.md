@@ -5,7 +5,7 @@ OpenAI-kompatible TTS-API mit dem **NeuTTS Nano German** Modell (Q4 GGUF).
 ## Features
 
 - Vollständige OpenAI TTS API-Kompatibilität (`/v1/audio/speech`)
--Deutsches Sprachmodell: `neuphonic/neutts-nano-german-q4-gguf`
+- Deutsches Sprachmodell: `neuphonic/neutts-nano-german-q4-gguf`
 - Eingebaute deutsche Stimmen: greta, mateo, juliette
 - Unterstützung für eigene Stimmen via Volume Mount
 - CPU-optimiert (GPU optional)
@@ -28,8 +28,12 @@ Der Service läuft dann auf Port **8136**.
 ### Eigene Stimmen hinzufügen
 
 1. Lege `.wav`-Dateien im `voices/` Ordner ab
-2. Optional:对应的 `.txt` Datei mit Referenz-Text
+2. Optional:对应 `.txt` Datei mit Referenz-Text
 3. Rufe `POST /v1/voices/reload` auf oder starte den Container neu
+
+**Hinweis zu den eingebauten Stimmen:** Die originalen `.wav`-Dateien werden beim ersten Start automatisch
+von HuggingFace heruntergeladen. Alternativ kannst du sie manuell von
+[neutts/samples](https://github.com/neuphonic/neutts/tree/main/samples) herunterladen.
 
 Beispiel:
 ```
