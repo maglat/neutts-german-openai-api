@@ -1,0 +1,43 @@
+services:
+  neutts-german:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: neutts-german-api
+    ports:
+      - "8136:8136"
+    volumes:
+      # Mount custom voices directory - put your .wav and .txt files here
+      - ${PWD}/voices:/app/voices
+      # Optional: Cache for downloaded models
+      - ${PWD}/model_cache:/app/model_cache
+    environment:
+      # Server config
+      - HOST=0.0.0.0
+      - PORT=8136
+      # Model config - German Q4 GGUF
+      - MODEL_REPO=neuphonic/neutts-nano-german-q4-gguf
+      - CODEC_REPO=neuphonic/neucodec
+      # Device settings - CPU primary, GPU optional
+      - BACKBONE_DEVICE=cpu
+      - CODEC_DEVICE=cpu
+      # Directories
+      - VOICES_DIR=/app/voices
+      # HuggingFace cache
+      - HF_HOME=/app/model_cache
+    # Uncomment for GPU support (requires NVIDIA Container Toolkit)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    # Then set BACKBONE_DEVICE=gpu and CODEC_DEVICE=cpu
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8136/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s

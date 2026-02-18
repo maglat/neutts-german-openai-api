@@ -1,0 +1,6 @@
+neutts[all]>=0.1.0
+fastapi[standard]
+uvicorn
+pydantic
+pydub
+numpy
